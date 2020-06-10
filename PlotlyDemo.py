@@ -75,7 +75,7 @@ def scrape_html():
 
     for row in countries_table.find_all('tr'):
         cells = row.find_all('td')
-        if(len(cells)==15):
+        if(len(cells)==len(header)):
             c1.append(cells[1].find(text=True)) #fetch the text in the url of the td tag(country name)
             c2.append(cells[2].find(text=True)) #total cases
             c3.append(cells[3].find(text=True))#new cases
@@ -88,8 +88,6 @@ def scrape_html():
             c10.append(cells[10].find(text=True))#Total deaths per 1 M population
 
     d = dict([(x,0) for x in header])
-
-    #print(c1)
 
     d['Country,Other'] = c1
     d['TotalCases'] = c2
@@ -114,7 +112,7 @@ def clean_data():
     df_table = scrape_html()
     mod_df_table = df_table.drop(index=[0,1,2,3,4,5,6])
     #mod_df_table= df_table
-    print(mod_df_table)
+    #print(mod_df_table)
 
     #drop unwanted columns
     mod_df_table = mod_df_table.drop(columns=['Continent','TotalTests','Tests/\n1M pop'])
@@ -298,6 +296,3 @@ def generate_maps():
     fig2 = go.Figure(data=data, layout=layout, frames=frames)
     fig2.show()
 generate_maps()
-
-
-
