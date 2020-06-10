@@ -8,6 +8,7 @@ import plotly as plt
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import os
 
 def simple_get(url):
     """
@@ -147,11 +148,11 @@ def clean_data():
     mod_df_table['ActiveCases'] = mod_df_table['ActiveCases'].str.replace(',', '')
 
 # # #export dataframe to a csv file
-    mod_df_table.to_csv('F:/Python/CSVcovid19latestdata.csv', index=False,header=True)
-
-    datafile = 'F:/Python/CSVcovid19latestdata.csv'
-
-    df = pd.read_csv(datafile)
+    path = os.path.dirname(os.path.abspath(__file__))
+    mod_df_table.to_csv(path+'/CSVcovid19latestdata.csv', index=False,header=True)
+    datafile = '../../CSVcovid19latestdata.csv'
+    df = pd.read_csv(datafile) 
+    print(path)
     return df
 
 def generate_maps():
@@ -296,3 +297,6 @@ def generate_maps():
     fig2 = go.Figure(data=data, layout=layout, frames=frames)
     fig2.show()
 generate_maps()
+
+
+
